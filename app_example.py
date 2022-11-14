@@ -1766,6 +1766,9 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
 
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
+
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2667,6 +2670,9 @@ def NCAA_Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
 
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
+
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2675,7 +2681,7 @@ def NCAA_Percentile(state):
         # st.download_button(label="Download data as CSV",data=csv,file_name='large_df.csv',mime='text/csv')
 
 
-st.set_page_config(layout="wide", page_title='Wave Recruitment App', initial_sidebar_state='collapsed')
+st.set_page_config(layout="wide", page_title='Recruitment App Example', initial_sidebar_state='expanded')
 
 
 if __name__ == "__main__":
