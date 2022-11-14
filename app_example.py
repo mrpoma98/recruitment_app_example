@@ -1008,6 +1008,8 @@ def Percentile(state):
                     """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1132,7 +1134,8 @@ def Percentile(state):
                     """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1261,7 +1264,8 @@ def Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1388,7 +1392,8 @@ def Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1515,14 +1520,15 @@ def Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
 
         # csv = convert_df(player_df)
         # st.download_button(label="Download data as CSV",data=csv,file_name='large_df.csv',mime='text/csv')
-    elif position == 'CB':
+    else:
         position_df = league_df[(league_df['Position'].str.contains('CB', na=False))]
         filter_df = position_df[(position_df['Minutes played'] >= 200) & (position_df.Team.notnull())]
         player_data = pd.DataFrame(filter_df,
@@ -1642,130 +1648,6 @@ def Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-    else:
-        position_df = league_df[(league_df['Position'].str.contains('GK', na=False))]
-        filter_df = position_df[(position_df['Minutes played'] >= 350) & (position_df.Team.notnull())]
-        player_data = pd.DataFrame(filter_df,
-                                   columns=['Team', 'Player', 'Age', 'Minutes played', 'Passes per 90',
-                                            'Accurate passes, %', 'Average pass length, m',
-                                            'Conceded goals per 90', 'Shots against per 90',
-                                            'Save rate, %', 'xG against per 90', 'Prevented goals per 90',
-                                            'Aerial duels per 90'
-                                            ]).reset_index()
-        col_list = ['Passes per 90', 'Accurate passes, %', 'Average pass length, m',
-                     'Conceded goals per 90', 'Shots against per 90',
-                     'Save rate, %', 'xG against per 90', 'Prevented goals per 90',
-                     'Aerial duels per 90']
-        player_df = player_data
-        player_data = player_data.fillna(0)
-
-        player_data[col_list] = player_data[col_list].apply(zscore)
-        player_data['Conceded goals per 90'] = -player_data['Conceded goals per 90']
-        player_data['xG against per 90'] = -player_data['xG against per 90']
-        player_data['Shots against per 90'] = -player_data['Shots against per 90']
-        player_data['Average pass length, m'] = -player_data['Average pass length, m']
-        # player_data = player_data.rename(columns={"xG per 90":"xG/90", "Non-penalty goals per 90":"Non-pen Goals/90",
-        #                                         "Shots per 90":"Shots/90", "Touches in box per 90":"TouchesinBox/90",
-        #                                        "Passes per 90":"Passes/90", "Accurate passes, %":"Pass%",
-        #                                       "Passes to penalty area per 90":"PassesInto18/90",
-        #                                      "Accurate passes to penalty area, %":"PassesInto18%", "Dribbles per 90":"Dribbles/90",
-        #                                     "Progressive runs per 90":"ProgressiveRuns/90", "Aerial duels won, %":"Aerial%"})
-
-        # st.dataframe(player_data)
-        with col3:
-            player = st.selectbox('Select Player', natsorted(player_data.Player.unique()))
-        player_df = player_df[player_df['Player'] == (player)]
-        player_df = player_df.drop(columns=['index'])
-        team = player_df.Team.unique()
-        team = (','.join(team))
-        # player_data = player_data.apply(zscore)
-        # player_data = player_data[player_data.Player == player]
-        player_data = player_data.drop(columns=['index', 'Team', 'Age', 'Minutes played'])
-        player_data = player_data.set_index('Player')
-        test = player_data.transpose()
-        my_range = range(0, len(test.index))
-        fig, ax = plt.subplots(figsize=(34, 20), facecolor='#e6e6e6')
-        gs = gridspec.GridSpec(2, 2, wspace=0.075, hspace=0.35, width_ratios=[1, .25], height_ratios=[1, .5])
-        ax = plt.subplot(gs[0:, 0])
-        markers, stemlines, baseline = plt.stem(test[player],
-                                                bottom=0, use_line_collection=True, markerfmt=' ')
-        # markerline.set_markerfacecolor('none')
-        # plt.setp(baseline, visible=False)
-        # my_color = np.where(test[player]>=0, 'darkblue', 'darkred')
-        my_color = np.where((test[player] >= 2.25), '#0343DF',  # when... then
-                            np.where((test[player] >= 1.25), '#069AF3',  # when... then
-                                     np.where((test[player] >= 0.25), '#7BC8F6',  # when... then
-                                              np.where((test[player] >= -0.25), 'white',
-                                                       np.where((test[player] <= -2.25), '#8C000F',  # when... then
-                                                                np.where((test[player] <= -1.25), '#FF0000',
-                                                                         # when... then
-                                                                         np.where((test[player] <= -0.25), '#FF796C',
-                                                                                  # when... then
-                                                                                  '#8C000F')))))))
-        plt.setp(stemlines, color=my_color, lw=30)
-        # plt.setp(markers, color)
-        plt.scatter(test.index, test[player], marker='o', s=1250, c=my_color, edgecolors='white', lw=4, zorder=12)
-        plt.setp(baseline, linestyle="-", color="black", linewidth=10)
-        baseline.set_xdata([0, 1])
-        baseline.set_transform(plt.gca().get_yaxis_transform())
-
-        # ax.annotate('test', xy=(.35,3.8), zorder=25)
-        ax.tick_params(axis='x', direction='out', color='black', labelsize=12)
-        ax.tick_params(axis='y', direction='out', color='black', labelsize=10)
-        ax.grid(color='white', linestyle='solid', linewidth=2, alpha=.5)
-        ax.set_facecolor('#595959')
-        player_df = player_df.fillna(0)
-        player_df['Age'] = int(player_df.Age)
-        # plt.title(str(player)+' - '+str(position)+'\nMinutes Played: '+str(sum(player_df['Minutes played']))+'\nAge: '+str(sum(player_df['Age'])),
-        #         fontproperties=titles)
-        # plt.title(str(player) + ' - ' + str(position) + '\n' + '\n', fontproperties=titles)
-        plt.ylabel('Difference From Average Performance', fontproperties=labels)
-        plt.yticks(fontproperties=labels)
-        plt.xticks(my_range, test.index, fontproperties=labels)
-        plt.xticks(rotation=25)
-        plt.ylim(-3.75, 3.75)
-        fig.text(.1, 0, 'Metrics Standardized by Position within League | ' + str(league), color='black',
-                 fontproperties=labels)
-        ax_standard_curve = plt.subplot(gs[1, 1])
-        distplot(ax_standard_curve)
-        textax = plt.subplot(gs[0,1])
-        textax.text(.5, .9, str(position)+' Standardized Metric Graph', fontproperties=positiontitle,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(.5, .715, str(player) + '\n', fontproperties=playertitle,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(.5, .68, str(team), fontproperties=teamtitle,
-                 horizontalalignment='center', verticalalignment='center')
-        if sum(player_df.Age) > 0:
-            textax.text(.5, .52, 'Age: ' + str(sum(player_df['Age'])), color='black', fontproperties=subtitles,
-                 horizontalalignment='center', verticalalignment='center')
-        else:
-            textax.text(.5, .52, 'Age: N/A', color='black', fontproperties=subtitles,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(.5, .475, 'Minutes Played: ' + str(sum(player_df['Minutes played'])), color='black',
-                 fontproperties=subtitles,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(0.5, 0.05, 'Blue in Avg Pass Length = Shorter Passes\nBlue in Shots, Goals, xG Conceded = Less Conceded',
-                    color='black', fontproperties=labels, horizontalalignment='center', verticalalignment='center')
-        textax.axis('off')
-        st.pyplot(fig)
-        fn = str(player) + ' - ' + str(position) + ' - ' + str(league) + '.png'
-        plt.savefig(fn, format='png', bbox_inches='tight')
-        with open(fn, "rb") as file:
-            btn = st.download_button(
-                label="Download " + str(player) + "'s Graph",
-                data=file,
-                file_name=fn,
-                mime="image/png"
-            )
-            hide_dataframe_row_index = """
-                                        <style>
-                                        .row_heading.level0 {display:none}
-                                        .blank {display:none}
-                                        </style>
-                                """
-        st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
-        st.table(player_df)
-
         st.write(
             "check out this [link](https://dataglossary.wyscout.com/)")
 
@@ -1912,6 +1794,8 @@ def NCAA_Percentile(state):
                     """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2036,7 +1920,8 @@ def NCAA_Percentile(state):
                     """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2165,7 +2050,8 @@ def NCAA_Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2292,7 +2178,8 @@ def NCAA_Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2420,13 +2307,16 @@ def NCAA_Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
 
+        st.write(
+            "check out this [link](https://dataglossary.wyscout.com/)")
+
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
 
         # csv = convert_df(player_df)
         # st.download_button(label="Download data as CSV",data=csv,file_name='large_df.csv',mime='text/csv')
-    elif position == 'CB':
+    else:
         position_df = league_df[(league_df['Position'].str.contains('CB', na=False))]
         filter_df = position_df[(position_df['Minutes played'] >= 200) & (position_df.Team.notnull())]
         player_data = pd.DataFrame(filter_df,
@@ -2546,132 +2436,10 @@ def NCAA_Percentile(state):
                         """
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
-    else:
-        position_df = league_df[(league_df['Position'].str.contains('GK', na=False))]
-        filter_df = position_df[(position_df['Minutes played'] >= 350) & (position_df.Team.notnull())]
-        player_data = pd.DataFrame(filter_df,
-                                   columns=['Team', 'Player', 'Age', 'Minutes played', 'Passes per 90',
-                                            'Accurate passes, %', 'Average pass length, m',
-                                            'Conceded goals per 90', 'Shots against per 90',
-                                            'Save rate, %', 'xG against per 90', 'Prevented goals per 90',
-                                            'Aerial duels per 90'
-                                            ]).reset_index()
-        col_list = ['Passes per 90', 'Accurate passes, %', 'Average pass length, m',
-                     'Conceded goals per 90', 'Shots against per 90',
-                     'Save rate, %', 'xG against per 90', 'Prevented goals per 90',
-                     'Aerial duels per 90']
-        player_df = player_data
-        player_data = player_data.fillna(0)
-
-        player_data[col_list] = player_data[col_list].apply(zscore)
-        player_data['Conceded goals per 90'] = -player_data['Conceded goals per 90']
-        player_data['xG against per 90'] = -player_data['xG against per 90']
-        player_data['Shots against per 90'] = -player_data['Shots against per 90']
-        player_data['Average pass length, m'] = -player_data['Average pass length, m']
-        # player_data = player_data.rename(columns={"xG per 90":"xG/90", "Non-penalty goals per 90":"Non-pen Goals/90",
-        #                                         "Shots per 90":"Shots/90", "Touches in box per 90":"TouchesinBox/90",
-        #                                        "Passes per 90":"Passes/90", "Accurate passes, %":"Pass%",
-        #                                       "Passes to penalty area per 90":"PassesInto18/90",
-        #                                      "Accurate passes to penalty area, %":"PassesInto18%", "Dribbles per 90":"Dribbles/90",
-        #                                     "Progressive runs per 90":"ProgressiveRuns/90", "Aerial duels won, %":"Aerial%"})
-
-        # st.dataframe(player_data)
-        with col4:
-            player = st.selectbox('Select Player', natsorted(player_data.Player.unique()))
-        player_df = player_df[player_df['Player'] == (player)]
-        player_df = player_df.drop(columns=['index'])
-        team = player_df.Team.unique()
-        team = (','.join(team))
-        # player_data = player_data.apply(zscore)
-        # player_data = player_data[player_data.Player == player]
-        player_data = player_data.drop(columns=['index', 'Team', 'Age', 'Minutes played'])
-        player_data = player_data.set_index('Player')
-        test = player_data.transpose()
-        my_range = range(0, len(test.index))
-        fig, ax = plt.subplots(figsize=(34, 20), facecolor='#e6e6e6')
-        gs = gridspec.GridSpec(2, 2, wspace=0.075, hspace=0.35, width_ratios=[1, .25], height_ratios=[1, .5])
-        ax = plt.subplot(gs[0:, 0])
-        markers, stemlines, baseline = plt.stem(test[player],
-                                                bottom=0, use_line_collection=True, markerfmt=' ')
-        # markerline.set_markerfacecolor('none')
-        # plt.setp(baseline, visible=False)
-        # my_color = np.where(test[player]>=0, 'darkblue', 'darkred')
-        my_color = np.where((test[player] >= 2.25), '#0343DF',  # when... then
-                            np.where((test[player] >= 1.25), '#069AF3',  # when... then
-                                     np.where((test[player] >= 0.25), '#7BC8F6',  # when... then
-                                              np.where((test[player] >= -0.25), 'white',
-                                                       np.where((test[player] <= -2.25), '#8C000F',  # when... then
-                                                                np.where((test[player] <= -1.25), '#FF0000',
-                                                                         # when... then
-                                                                         np.where((test[player] <= -0.25), '#FF796C',
-                                                                                  # when... then
-                                                                                  '#8C000F')))))))
-        plt.setp(stemlines, color=my_color, lw=30)
-        # plt.setp(markers, color)
-        plt.scatter(test.index, test[player], marker='o', s=1250, c=my_color, edgecolors='white', lw=4, zorder=12)
-        plt.setp(baseline, linestyle="-", color="black", linewidth=10)
-        baseline.set_xdata([0, 1])
-        baseline.set_transform(plt.gca().get_yaxis_transform())
-
-        # ax.annotate('test', xy=(.35,3.8), zorder=25)
-        ax.tick_params(axis='x', direction='out', color='black', labelsize=12)
-        ax.tick_params(axis='y', direction='out', color='black', labelsize=10)
-        ax.grid(color='white', linestyle='solid', linewidth=2, alpha=.5)
-        ax.set_facecolor('#595959')
-        player_df = player_df.fillna(0)
-        player_df['Age'] = int(player_df.Age)
-        # plt.title(str(player)+' - '+str(position)+'\nMinutes Played: '+str(sum(player_df['Minutes played']))+'\nAge: '+str(sum(player_df['Age'])),
-        #         fontproperties=titles)
-        # plt.title(str(player) + ' - ' + str(position) + '\n' + '\n', fontproperties=titles)
-        plt.ylabel('Difference From Average Performance', fontproperties=labels)
-        plt.yticks(fontproperties=labels)
-        plt.xticks(my_range, test.index, fontproperties=labels)
-        plt.xticks(rotation=25)
-        plt.ylim(-3.75, 3.75)
-        fig.text(.1, 0, 'Metrics Standardized by Position within League | ' + str(conference), color='black',
-                 fontproperties=labels)
-        ax_standard_curve = plt.subplot(gs[1, 1])
-        distplot(ax_standard_curve)
-        textax = plt.subplot(gs[0,1])
-        textax.text(.5, .9, str(position)+' Standardized Metric Graph', fontproperties=positiontitle,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(.5, .715, str(player) + '\n', fontproperties=playertitle,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(.5, .68, str(team), fontproperties=teamtitle,
-                 horizontalalignment='center', verticalalignment='center')
-        if sum(player_df.Age) > 0:
-            textax.text(.5, .52, 'Age: ' + str(sum(player_df['Age'])), color='black', fontproperties=subtitles,
-                 horizontalalignment='center', verticalalignment='center')
-        else:
-            textax.text(.5, .52, 'Age: N/A', color='black', fontproperties=subtitles,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(.5, .475, 'Minutes Played: ' + str(sum(player_df['Minutes played'])), color='black',
-                 fontproperties=subtitles,
-                 horizontalalignment='center', verticalalignment='center')
-        textax.text(0.5, 0.05, 'Blue in Avg Pass Length = Shorter Passes\nBlue in Shots, Goals, xG Conceded = Less Conceded',
-                    color='black', fontproperties=labels, horizontalalignment='center', verticalalignment='center')
-        textax.axis('off')
-        st.pyplot(fig)
-        fn = str(player) + ' - ' + str(position) + ' - ' + str(conference) + '.png'
-        plt.savefig(fn, format='png', bbox_inches='tight')
-        with open(fn, "rb") as file:
-            btn = st.download_button(
-                label="Download " + str(player) + "'s Graph",
-                data=file,
-                file_name=fn,
-                mime="image/png"
-            )
-            hide_dataframe_row_index = """
-                                        <style>
-                                        .row_heading.level0 {display:none}
-                                        .blank {display:none}
-                                        </style>
-                                """
-        st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
-        st.table(player_df)
 
         st.write(
             "check out this [link](https://dataglossary.wyscout.com/)")
+
 
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
