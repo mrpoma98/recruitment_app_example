@@ -890,7 +890,7 @@ def Percentile(state):
         league = st.selectbox('Select League', natsorted(df.country_league.unique()))
     league_df = df[df['country_league'] == league]
     with col2:
-        position = st.selectbox('Select Position', ['CF', 'W', 'AM-CM', 'DM', 'FB', 'CB', 'GK'])
+        position = st.selectbox('Select Position', ['CF', 'W', 'AM-CM', 'DM', 'FB', 'CB'])
     if position == 'CF':
         position_df = league_df[league_df['Position'].str.contains(position, na=False)]
         filter_df = position_df[(position_df['Minutes played'] >= 350) & (position_df.Team.notnull())]
@@ -1672,7 +1672,7 @@ def NCAA_Percentile(state):
         conference = st.selectbox('Select Conference', natsorted(league_df.conference_season.unique()))
     league_df = df1[df1['conference_season'] == (conference)]
     with col3:
-        position = st.selectbox('Select Position', ['CF', 'W', 'AM-CM', 'DM', 'FB', 'CB', 'GK'])
+        position = st.selectbox('Select Position', ['CF', 'W', 'AM-CM', 'DM', 'FB', 'CB'])
     if position == 'CF':
         position_df = league_df[league_df['Position'].str.contains(position, na=False)]
         filter_df = position_df[(position_df['Minutes played'] >= 200) & (position_df.Team.notnull())]
