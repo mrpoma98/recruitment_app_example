@@ -1009,7 +1009,7 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1135,7 +1135,7 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1265,7 +1265,7 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1393,7 +1393,7 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1521,7 +1521,7 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1649,7 +1649,7 @@ def Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
 
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
@@ -1795,7 +1795,7 @@ def NCAA_Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -1921,7 +1921,7 @@ def NCAA_Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2051,7 +2051,7 @@ def NCAA_Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2179,7 +2179,7 @@ def NCAA_Percentile(state):
         st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
         st.table(player_df)
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv().encode('utf-8')
@@ -2308,7 +2308,7 @@ def NCAA_Percentile(state):
         st.table(player_df)
 
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
 
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
@@ -2438,7 +2438,7 @@ def NCAA_Percentile(state):
         st.table(player_df)
 
         st.write(
-            "check out this [link](https://dataglossary.wyscout.com/)")
+            "Glossary to metrics in the [link](https://dataglossary.wyscout.com/)")
 
 
         def convert_df(df):
