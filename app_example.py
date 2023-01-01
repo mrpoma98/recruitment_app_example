@@ -31,7 +31,7 @@ labels = fm.FontProperties(fname=fontPathNBold, size=12)
 def load_data():
     #url = 'https://drive.google.com/file/d/1KD5nxMlZZImiArxLXg4N43uiUkJ4taQP/view?usp=sharing'
     #path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
-    path = './Wyscout_All_Leagues_Data_App.csv'
+    path = './Wyscout_All_Leagues_Data.csv'
     df = pd.read_csv(path)
     df.Team = df['Team within selected timeframe']
     #df = df[(df.Team.isin(player)) & (df.Season.isin(season))]
