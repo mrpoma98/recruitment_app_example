@@ -1,6 +1,8 @@
 ## test edit to see how vscode works
 
 
+### Hi Jessie!
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.gridspec as gridspec
